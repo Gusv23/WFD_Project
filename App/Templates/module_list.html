@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modules</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+    <h1>Available Training Modules</h1>
+    <ul class="list-group">
+        {% for module in modules %}
+        <li class="list-group-item">
+            <strong>{{ module.title }}</strong><br>
+            {{ module.description }}<br>
+            Trainer: {{ module.trainer.username }}
+        </li>
+        {% empty %}
+        <li class="list-group-item">No modules yet.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
