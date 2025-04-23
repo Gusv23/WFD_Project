@@ -16,3 +16,8 @@ def enroll(request, module_id):
     module = Module.objects.get(id=module_id)
     Enrollment.objects.get_or_create(student=student, module=module)
     return redirect('module_list')
+
+def module_detail(request, module_id):
+    module = Module.objects.get(id=module_id)
+    materials = module.materials.all()
+    return render(request, 'module_detail.html', {'module': module, 'materials': materials})
