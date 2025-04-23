@@ -7,4 +7,5 @@ urlpatterns = [
     path('enroll/<int:module_id>/', views.enroll, name='enroll'),
     path('modules/<int:module_id>/', views.module_detail, name='module_detail'),
     path('modules/<int:module_id>/submit/', views.submit_assignment, name='submit_assignment'),
+    path('trainer/dashboard/', views.trainer_dashboard, name='trainer_dashboard'),
 ]

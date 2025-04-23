@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Module, Enrollment, Student
 from django.contrib.auth.decorators import login_required
 from .forms import AssignmentForm 
+from django.contrib.auth.models import User
+
 
 
 def home(request):
@@ -40,3 +42,8 @@ def submit_assignment(request, module_id):
         form = AssignmentForm()
 
     return render(request, 'submit_assignment.html', {'form': form, 'module': module})
+
+@login_required
+def trainer_dashboard(request):
+    modules = Module.objects.filter(trainer=request.user)
+    return render(request, 'trainer_dashboard.html', {'modules': modules})
