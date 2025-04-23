@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from .models import Module
+from django.shortcuts import render, redirect
+from .models import Module, Enrollment, Student
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     return render(request, 'home.html')
@@ -7,3 +9,10 @@ def home(request):
 def module_list(request):
     modules = Module.objects.all()
     return render(request, 'module_list.html', {'modules': modules})
+
+@login_required
+def enroll(request, module_id):
+    student = Student.objects.get(user=request.user)
+    module = Module.objects.get(id=module_id)
+    Enrollment.objects.get_or_create(student=student, module=module)
+    return redirect('module_list')

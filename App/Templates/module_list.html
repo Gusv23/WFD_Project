@@ -11,8 +11,13 @@
         <li class="list-group-item">
             <strong>{{ module.title }}</strong><br>
             {{ module.description }}<br>
-            Trainer: {{ module.trainer.username }}
-        </li>
+            Trainer: {{ module.trainer.username }}<br>
+            {% if user.is_authenticated %}
+            <a href="{% url 'enroll' module.id %}" class="btn btn-sm btn-success mt-2">Enroll</a>
+            {% else %}
+            <a href="/accounts/login/" class="btn btn-sm btn-secondary mt-2">Login to enroll</a>
+            {% endif %}
+        </li>        
         {% empty %}
         <li class="list-group-item">No modules yet.</li>
         {% endfor %}
