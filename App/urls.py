@@ -9,4 +9,6 @@ urlpatterns = [
     path('modules/<int:module_id>/submit/', views.submit_assignment, name='submit_assignment'),
     path('trainer/dashboard/', views.trainer_dashboard, name='trainer_dashboard'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('messages/send/', views.send_message, name='send_message'),
+    path('messages/inbox/', views.inbox, name='inbox'),
 ]

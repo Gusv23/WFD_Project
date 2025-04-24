@@ -12,12 +12,15 @@
             <strong>{{ module.title }}</strong><br>
             {{ module.description }}<br>
             Trainer: {{ module.trainer.username }}<br>
+            
             {% if user.is_authenticated %}
-            <a href="{% url 'enroll' module.id %}" class="btn btn-sm btn-success mt-2">Enroll</a>
+                <a href="{% url 'enroll' module.id %}" class="btn btn-sm btn-success mt-2">Enroll</a>
+                <a href="{% url 'module_detail' module.id %}" class="btn btn-sm btn-primary mt-2">View Materials</a>
+                <a href="{% url 'submit_assignment' module.id %}" class="btn btn-sm btn-warning mt-2">Submit Assignment</a>
             {% else %}
-            <a href="/accounts/login/" class="btn btn-sm btn-secondary mt-2">Login to enroll</a>
+                <a href="/accounts/login/" class="btn btn-sm btn-secondary mt-2">Login to access features</a>
             {% endif %}
-        </li>        
+        </li>
         {% empty %}
         <li class="list-group-item">No modules yet.</li>
         {% endfor %}

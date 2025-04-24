@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Module, Enrollment, Student
 from django.contrib.auth.decorators import login_required
-from .forms import AssignmentForm, UserForm
+from .forms import AssignmentForm, UserForm, MessageForm
 from django.contrib.auth.models import User
 
 
@@ -60,3 +60,22 @@ def edit_profile(request):
     else:
         form = UserForm(instance=user)
     return render(request, 'edit_profile.html', {'form': form})
+
+
+@login_required
+def send_message(request):
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.sender = request.user
+            message.save()
+            return redirect('inbox')
+    else:
+        form = MessageForm()
+    return render(request, 'send_message.html', {'form': form})
+
+@login_required
+def inbox(request):
+    messages = request.user.received_messages.all().order_by('-timestamp')
+    return render(request, 'inbox.html', {'messages': messages})
