@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Module, Enrollment, Student
 from django.contrib.auth.decorators import login_required
-from .forms import AssignmentForm 
+from .forms import AssignmentForm, UserForm
 from django.contrib.auth.models import User
 
 
@@ -47,3 +47,16 @@ def submit_assignment(request, module_id):
 def trainer_dashboard(request):
     modules = Module.objects.filter(trainer=request.user)
     return render(request, 'trainer_dashboard.html', {'modules': modules})
+
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = UserForm(instance=user)
+    return render(request, 'edit_profile.html', {'form': form})
